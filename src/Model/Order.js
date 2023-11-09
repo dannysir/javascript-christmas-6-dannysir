@@ -2,12 +2,11 @@ import Menu from "../Constants/Menu.js";
 import OrderedMenu from "./OrderedMenu.js";
 
 class Order {
-    #WEEKEND;
     #MENU;
-
-    constructor(Menu, Weekend) {
-        this.#WEEKEND = Weekend;
+    #TOTAL_PRICE;
+    constructor(Menu) {
         this.#MENU = this.checkMenu(Menu);
+        this.#TOTAL_PRICE = this.calculateTotalPrice(this.#MENU);
     }
 
     checkMenu(Menu) {
@@ -26,11 +25,6 @@ class Order {
         return makeStringMenu;
     }
 
-    checkMenuType(Type) {
-        const cnt = Menu.filter(value => {
-            value.name
-        });
-    }
     calculateTotalPrice(order) {
         let totalPrice = 0;
 
@@ -38,8 +32,11 @@ class Order {
             const menuItem = new OrderedMenu(item);
             totalPrice += menuItem.getPrice() * menuItem.getCnt();
         }
+        return totalPrice;
+    }
 
-        return totalPrice.toLocaleString('en-US', { style: 'decimal'});
+    getTotalPrice(){
+        return this.#TOTAL_PRICE;
     }
 
     getMenu(){

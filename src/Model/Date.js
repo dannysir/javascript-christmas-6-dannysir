@@ -7,7 +7,7 @@ class Date {
         this.validator(Day);
         this.#DAY = parseInt(Day);
         this.#IS_STAR = this.checkStar(parseInt(Day));
-        this.#D_Day_DISCOUNT = this.getDdayDiscount(Day);
+        this.#D_Day_DISCOUNT = this.getDdayDiscount(parseInt(Day));
         this.#WEEKEND = this.checkWeekEnd(Day);
     }
 
