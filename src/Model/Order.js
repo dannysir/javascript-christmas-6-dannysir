@@ -1,3 +1,5 @@
+import Menu from "../Constants/Menu.js";
+
 class Order {
     #WEEKEND;
     #MENU;
@@ -21,6 +23,20 @@ class Order {
         });
         return makeStringMenu;
     }
+
+    calculateTotalPrice(order) {
+        let totalPrice = 0;
+
+        for (const item of order) {
+            const menuItem = Menu.find(menuItem => menuItem.name === item[0]);
+            if (menuItem) {
+                totalPrice += menuItem.price * parseInt(item[1], 10);
+            }
+        }
+
+        return totalPrice.toLocaleString('en-US', { style: 'decimal'});
+    }
+
     getMenu(){
         return this.#MENU;
     }

@@ -7,6 +7,7 @@ class App {
     const MYORDER = await InputMenuController(MYDAY);
     OutputView.printFisrtOut(MYDAY.getDay());
     OutputView.printMenu(MYORDER.getMyOrder());
+    OutputView.printTotalCost(MYORDER.calculateTotalPrice(MYORDER.getMenu()));
   }
 }
 
