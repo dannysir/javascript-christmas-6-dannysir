@@ -13,6 +13,9 @@ class App {
     const DISCOUNT = new Discount(MY_DAY, MY_ORDER);
     OutputView.printGift(DISCOUNT.getGiftList());
     OutputView.printList(DISCOUNT.getList());
+    OutputView.printTotalDiscount(DISCOUNT.getTotalBenefit());
+    OutputView.printRealCost(DISCOUNT.getRealCost());
+    OutputView.printBadge(DISCOUNT.getBadge());
   }
 }
 

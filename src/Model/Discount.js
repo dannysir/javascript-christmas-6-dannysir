@@ -34,7 +34,7 @@ class Discount {
         return `평일 할인 = ${this.#DISCOUNT.toLocaleString('en-US', {style: 'decimal'})}원\n`
     }
 
-    weekendDiscount(MENU,type) {
+    weekendDiscount(MENU, type) {
         MENU.forEach((v) => {
             const EachMenu = new OrderedMenu(v);
             if (EachMenu.getType() === type) {
@@ -69,11 +69,11 @@ class Discount {
     }
 
     getTotalBenefit() {
-        return this.#GIFT + this.#TOTAL_DISCOUNT;
+        return `-${(this.#GIFT + this.#TOTAL_DISCOUNT).toLocaleString('en-US', {style: 'decimal'})}원`;
     }
 
-    realCost() {
-        return this.#TOTAL_PRICE - this.#TOTAL_DISCOUNT;
+    getRealCost() {
+        return `${(this.#TOTAL_PRICE - this.#TOTAL_DISCOUNT).toLocaleString('en-US', {style: 'decimal'})}원`;
     }
 
     getBadge() {
@@ -88,7 +88,7 @@ class Discount {
         return this.#GIFT_LIST;
     }
 
-    getList(){
+    getList() {
         return this.#LIST_STRING;
     }
 }
