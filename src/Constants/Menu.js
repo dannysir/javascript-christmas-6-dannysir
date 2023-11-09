@@ -19,5 +19,4 @@ const Menu = [
     {name: "샴페인", price: 25000, type: "drink"},
 
 ];
-console.log(Menu.some((item) => item.name === "시저샐러드"));
 export default Menu;
