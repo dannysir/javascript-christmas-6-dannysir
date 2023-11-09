@@ -14,6 +14,13 @@ class Order {
         return MenuSplit;
     }
 
+    getMyOrder(){
+        let makeStringMenu = "";
+        this.#MENU.forEach((v) => {
+            makeStringMenu += `${v[0]} ${v[1]}개\n`;
+        });
+        return makeStringMenu;
+    }
     getMenu(){
         return this.#MENU;
     }

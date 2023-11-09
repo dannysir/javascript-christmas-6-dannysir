@@ -42,6 +42,10 @@ class Date {
     getIsStar(){
         return this.#IS_STAR;
     }
+
+    getWeekend(){
+        return this.#WEEKEND;
+    }
 }
 
 export default Date;
