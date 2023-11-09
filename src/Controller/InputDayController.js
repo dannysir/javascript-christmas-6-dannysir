@@ -8,7 +8,7 @@ const InputDayController = async () => {
         return TheDayWant;
     }catch (e) {
         Console.print("[ERROR] 유효하지 않은 날짜입니다. 다시 입력해 주세요.");
-        await InputDayController();
+        return InputDayController();
     }
 }
 export default InputDayController;
