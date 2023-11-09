@@ -18,4 +18,12 @@ describe("Date Model 테스트", () => {
         const ANSWER = [["티본스테이크", "1"], ["바비큐립", "1"], ["초코케이크", "2"], ["제로콜라", "1"]];
         expect(MyOrder.getMenu()).toEqual(ANSWER);
     });
+
+    test("가격 출력", () => {
+        const MENU = "티본스테이크-1,바비큐립-1,초코케이크-2,제로콜라-1";
+        const isWeekEnd = true;
+        const MyOrder = new Order(MENU, isWeekEnd);
+        const ANSWER = "142,000";
+        expect(MyOrder.calculateTotalPrice(MyOrder.getMenu())).toStrictEqual(ANSWER);
+    });
 });
