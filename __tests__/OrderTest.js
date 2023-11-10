@@ -15,5 +15,10 @@ describe("Order Model 테스트", () => {
         expect(MyOrder.getTotalPrice()).toStrictEqual(ANSWER);
     });
 
-
+    test("메뉴에 없는 주문", () => {
+        const MENU = "토스트-1,바비큐립-1,초코케이크-2,제로콜라-1";
+        expect(() => {
+            new Order(MENU)
+        }).toThrow("[ERROR]");
+    });
 });
