@@ -21,4 +21,14 @@ describe("Order Model 테스트", () => {
             new Order(MENU)
         }).toThrow("[ERROR]");
     });
+
+    test.each([
+        "토스트-1,바비큐립-1,초코케이크-2,제로콜라-1",
+        "토스트-1a,바비큐립-1,초코케이크-2,제로콜라-1",
+        "토스트-1,바비큐립-1,초코케이크-2,토스트-1"
+    ])("예외처리 - 옳지 않은 주문",  (inputs) => {
+        expect(() => {
+            new Order(inputs)
+        }).toThrow("[ERROR]");
+    });
 });
