@@ -28,10 +28,10 @@ class Discount {
     countWeekEndDiscount(MENU) {
         if (this.#WEEKEND) {
             this.weekendDiscount(MENU, "main");
-            return `주말 할인 = ${this.#DISCOUNT.toLocaleString('en-US', {style: 'decimal'})}원\n`
+            return `주말 할인: -${this.#DISCOUNT.toLocaleString('en-US', {style: 'decimal'})}원\n`
         }
         this.weekendDiscount(MENU, "dessert");
-        return `평일 할인 = ${this.#DISCOUNT.toLocaleString('en-US', {style: 'decimal'})}원\n`
+        return `평일 할인: -${this.#DISCOUNT.toLocaleString('en-US', {style: 'decimal'})}원\n`
     }
 
     weekendDiscount(MENU, type) {
