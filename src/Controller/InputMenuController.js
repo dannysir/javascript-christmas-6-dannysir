@@ -8,7 +8,7 @@ const inputMenuController = async () => {
         const MENU = new Order(await inputView.readMenu());
         return MENU;
     }catch (e) {
-        Console.print("[ERROR] 메뉴 형식대로 작성해주세요");
+        Console.print(e.message);
         return inputMenuController();
     }
 }
