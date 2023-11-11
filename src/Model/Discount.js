@@ -4,7 +4,7 @@ class Discount {
     #LIST_STRING = "";
     #TOTAL_DISCOUNT = 0;
     #TOTAL_BENEFIT = 0;
-    #GIFT;
+    #GIFT = false;
     #REAL_COST;
 
     constructor(Day, Order) {
