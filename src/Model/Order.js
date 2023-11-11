@@ -11,8 +11,8 @@ class Order {
     }
 
     validator() {
-        let menuType = new Set([]);
-        let setName = new Set([]);
+        let menuType = new Set();
+        let setName = new Set();
         let cntMenu = 0;
         this.#MENU.forEach((v) => {
             const EACH_MENU = new OrderedMenu(v);
@@ -20,7 +20,7 @@ class Order {
             setName.add(EACH_MENU.getName());
             cntMenu += EACH_MENU.getCnt();
         });
-        if (menuType.size === 1 && menuType[0] === "drink") throw new Error("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
+        if (menuType.size === 1 && menuType.has("drink")) throw new Error("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
         if (cntMenu >20) throw new Error("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
         if (setName.size !== this.#MENU.length) throw new Error("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.")
     }
