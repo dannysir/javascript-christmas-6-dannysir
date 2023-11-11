@@ -1,6 +1,6 @@
-import Menu from "../Constants/Menu.js";
 import OrderedMenu from "./OrderedMenu.js";
 import errorMessage from "../Constants/ErrorMessage.js";
+import constant from "../Constants/Constant.js";
 
 class Order {
     #MENU;
@@ -21,14 +21,14 @@ class Order {
             setName.add(EACH_MENU.getName());
             cntMenu += EACH_MENU.getCnt();
         });
-        if (menuType.size === 1 && menuType.has("drink")) throw new Error(errorMessage.NOT_VALID_ORDER);
+        if (menuType.size === 1 && menuType.has(constant.DRINK)) throw new Error(errorMessage.NOT_VALID_ORDER);
         if (cntMenu >20) throw new Error(errorMessage.NOT_VALID_ORDER);
         if (setName.size !== this.#MENU.length) throw new Error(errorMessage.NOT_VALID_ORDER)
     }
 
     checkMenu(Menu) {
-        const MenuSplit = Menu.split(",").map((v)=>{
-            return v.split("-");
+        const MenuSplit = Menu.split(constant.ORDER_DIVIDE).map((v)=>{
+            return v.split(constant.ORDER_NUMBER_DIVIDE);
         });
         return MenuSplit;
     }

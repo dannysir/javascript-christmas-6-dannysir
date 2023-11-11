@@ -1,5 +1,6 @@
 import OrderedMenu from "./OrderedMenu.js";
-
+import Menu from "../Constants/Menu.js";
+import constantForDiscount from "../Constants/ConstantsForDiscount.js";
 class Discount {
     #LIST_STRING = "";
     #TOTAL_DISCOUNT = 0;
@@ -8,25 +9,25 @@ class Discount {
     #REAL_COST;
 
     constructor(Day, Order) {
-        if (Order.getTotalPrice() >= 10000) {
+        if (Order.getTotalPrice() >= constantForDiscount.EVENT_LIMIT) {
             this.#LIST_STRING += this.ChristmasDiscount(Day.getDay());
             this.#LIST_STRING += this.countWeekEndDiscount(Order.getMenu(), Day.getWeekend());
             this.#LIST_STRING += this.specialDiscount(Day.getIsStar());
             this.#LIST_STRING += this.giftEvent(Order.getTotalPrice());
             this.#TOTAL_BENEFIT += this.calculateTotalBenefit();
         }
-        if (Order.getTotalPrice() < 10000) {
-            this.#LIST_STRING = "없음";
+        if (Order.getTotalPrice() < constantForDiscount.EVENT_LIMIT) {
+            this.#LIST_STRING = constantForDiscount.NOTHING;
         }
         this.#REAL_COST = Order.getTotalPrice() - this.#TOTAL_DISCOUNT;
     }
 
     countWeekEndDiscount(MENU, WEEKEND) {
         if (WEEKEND) {
-            const DISCOUNT = this.weekendDiscount(MENU, "main");
+            const DISCOUNT = this.weekendDiscount(MENU, constantForDiscount.MAIN);
             return `주말 할인: -${DISCOUNT.toLocaleString('en-US', {style: 'decimal'})}원\n`
         }
-        const DISCOUNT = this.weekendDiscount(MENU, "dessert");
+        const DISCOUNT = this.weekendDiscount(MENU, constantForDiscount.DESSERT);
         return `평일 할인: -${DISCOUNT.toLocaleString('en-US', {style: 'decimal'})}원\n`
     }
 
@@ -35,15 +36,15 @@ class Discount {
         MENU.forEach((v) => {
             const EachMenu = new OrderedMenu(v);
             if (EachMenu.getType() === type) {
-                discount += EachMenu.getCnt() * 2023;
-                this.#TOTAL_DISCOUNT += EachMenu.getCnt() * 2023;
+                discount += EachMenu.getCnt() * constantForDiscount.WEEKEND_DISCOUNT;
+                this.#TOTAL_DISCOUNT += EachMenu.getCnt() * constantForDiscount.WEEKEND_DISCOUNT;
             }
         });
         return discount;
     }
 
     ChristmasDiscount(Day) {
-        if (Day <= 25) {
+        if (Day <= constantForDiscount.CHRISTMAS) {
             const DAY_DISCOUNT = ((Day - 1) * 100) + 1000;
             this.#TOTAL_DISCOUNT += DAY_DISCOUNT;
             return `크리스마스 디데이 할인: -${DAY_DISCOUNT.toLocaleString('en-US', {style: 'decimal'})}원\n`;
@@ -51,23 +52,22 @@ class Discount {
     }
 
     specialDiscount(isStar) {
-        const SPECIAL_DISCOUNT = 1000;
         if (isStar) {
-            this.#TOTAL_DISCOUNT += SPECIAL_DISCOUNT;
-            return `특별 할인: -${SPECIAL_DISCOUNT.toLocaleString('en-US', {style: 'decimal'})}원\n`;
+            this.#TOTAL_DISCOUNT += constantForDiscount.SPECIAL_DISCOUNT;
+            return `특별 할인: -${constantForDiscount.SPECIAL_DISCOUNT.toLocaleString('en-US', {style: 'decimal'})}원\n`;
         }
     }
 
     giftEvent(total) {
         if (total > 120000) {
             this.#GIFT = true;
-            return `증정 이벤트: -25,000원`;
+            return `증정 이벤트: -${Menu.find(({name}) => name === "샴페인").price.toLocaleString('en-US', {style: 'decimal'})}원\n`;
         }
     }
 
     calculateTotalBenefit() {
         if (this.#GIFT) {
-            return 25000 + this.#TOTAL_DISCOUNT;
+            return Menu.find(({name}) => name === "샴페인").price + this.#TOTAL_DISCOUNT;
         }
         return this.#TOTAL_DISCOUNT;
     }
@@ -80,15 +80,15 @@ class Discount {
     }
 
     getBadge() {
-        if (this.#TOTAL_BENEFIT >= 20000) return "산타";
-        if (this.#TOTAL_BENEFIT >= 10000) return "트리";
-        if (this.#TOTAL_BENEFIT >= 5000) return "별";
-        return "없음";
+        if (this.#TOTAL_BENEFIT >= constantForDiscount.BADGE_SANTA_LIMIT) return constantForDiscount.BADGE_SANTA;
+        if (this.#TOTAL_BENEFIT >= constantForDiscount.BADGE_TREE_LIMIT) return constantForDiscount.BADGE_TREE;
+        if (this.#TOTAL_BENEFIT >= constantForDiscount.BADGE_STAR_LIMIT) return constantForDiscount.BADGE_STAR;
+        return constantForDiscount.NOTHING;
     }
 
     getGiftList() {
-        if (this.#GIFT) return "샴페인 1개";
-        return "없음";
+        if (this.#GIFT) return `${constantForDiscount.GIFT} ${constantForDiscount.GIFT_HOW_MUCH}개`;
+        return constantForDiscount.NOTHING;
     }
 
     getList() {

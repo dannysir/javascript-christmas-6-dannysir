@@ -1,3 +1,6 @@
+import errorMessage from "../Constants/ErrorMessage.js";
+import constantsForDate from "../Constants/ConstantsForDate.js";
+
 class Date {
     #DAY
     #IS_STAR
@@ -12,18 +15,17 @@ class Date {
     validator(Day){
         const SPLIT_DAY = Day.split("");
         SPLIT_DAY.forEach((v) => {
-            if (isNaN(v)) throw new Error("[ERROR] 유효하지 않은 날짜입니다. 다시 입력해 주세요.");
+            if (isNaN(v)) throw new Error(errorMessage.NOT_VALID_DAY);
         });
-        if (parseInt(Day) < 1 || parseInt(Day) > 31) throw new Error("[ERROR] 유효하지 않은 날짜입니다. 다시 입력해 주세요.");
+        if (parseInt(Day) < constantsForDate.DECEMBER_START || parseInt(Day) > constantsForDate.DECEMBER_END) throw new Error(errorMessage.NOT_VALID_DAY);
 
     }
     checkStar(Day) {
-        const starDay = [3, 10, 17, 24, 25, 31];
-        return starDay.includes(Day);
+        return constantsForDate.STAR_DAY.includes(Day);
     }
 
     checkWeekEnd(Day) {
-        if (Day % 7 === 1 || Day % 7 === 2) return true;
+        if (constantsForDate.WEEK_END.includes(Day % 7)) return true;
         return false;
     }
     getDay(){
