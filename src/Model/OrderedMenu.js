@@ -1,4 +1,5 @@
 import Menu from "../Constants/Menu.js";
+import errorMessage from "../Constants/ErrorMessage.js";
 
 class OrderedMenu {
     #NAME
@@ -15,12 +16,12 @@ class OrderedMenu {
 
     validator(OrderArray) {
         if (!Menu.some((v) => v.name === OrderArray[0])) {
-            throw new Error("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
+            throw new Error(errorMessage.NOT_VALID_ORDER);
         }
         OrderArray[1].split("").forEach(v => {
-            if (isNaN(v)) throw new Error("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
+            if (isNaN(v)) throw new Error(errorMessage.NOT_VALID_ORDER);
         });
-        if (parseInt(OrderArray[1]) < 1) throw new Error("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
+        if (parseInt(OrderArray[1]) < 1) throw new Error(errorMessage.NOT_VALID_ORDER);
 
     }
     checkType(OrderArr) {
