@@ -25,10 +25,12 @@ class Discount {
     countWeekEndDiscount(MENU, WEEKEND) {
         if (WEEKEND) {
             const DISCOUNT = this.weekendDiscount(MENU, constantForDiscount.MAIN);
-            return `주말 할인: -${DISCOUNT.toLocaleString('en-US', {style: 'decimal'})}원\n`
+            if (DISCOUNT > 0) return `주말 할인: -${DISCOUNT.toLocaleString('en-US', {style: 'decimal'})}원\n`
+            return "";
         }
         const DISCOUNT = this.weekendDiscount(MENU, constantForDiscount.DESSERT);
-        return `평일 할인: -${DISCOUNT.toLocaleString('en-US', {style: 'decimal'})}원\n`
+        if (DISCOUNT > 0) return `평일 할인: -${DISCOUNT.toLocaleString('en-US', {style: 'decimal'})}원\n`
+        return "";
     }
 
     weekendDiscount(MENU, type) {
@@ -49,6 +51,7 @@ class Discount {
             this.#TOTAL_DISCOUNT += DAY_DISCOUNT;
             return `크리스마스 디데이 할인: -${DAY_DISCOUNT.toLocaleString('en-US', {style: 'decimal'})}원\n`;
         }
+        return "";
     }
 
     specialDiscount(isStar) {
@@ -63,6 +66,7 @@ class Discount {
             this.#GIFT = true;
             return `증정 이벤트: -${Menu.find(({name}) => name === "샴페인").price.toLocaleString('en-US', {style: 'decimal'})}원\n`;
         }
+        return "";
     }
 
     calculateTotalBenefit() {
