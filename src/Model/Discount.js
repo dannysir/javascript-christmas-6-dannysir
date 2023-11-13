@@ -8,28 +8,32 @@ class Discount {
     #GIFT = false;
     #REAL_COST;
 
+    #DISCOUNT_
     constructor(Day, Order) {
-        if (Order.getTotalPrice() >= constantForDiscount.EVENT_LIMIT) {
-            this.#LIST_STRING += this.ChristmasDiscount(Day.getDay());
-            this.#LIST_STRING += this.countWeekEndDiscount(Order.getMenu(), Day.getWeekend());
-            this.#LIST_STRING += this.specialDiscount(Day.getIsStar());
-            this.#LIST_STRING += this.giftEvent(Order.getTotalPrice());
-            this.#TOTAL_BENEFIT += this.calculateTotalBenefit();
-        }
-        if (Order.getTotalPrice() < constantForDiscount.EVENT_LIMIT) {
-            this.#LIST_STRING = constantForDiscount.NOTHING;
-        }
+        this.calculateDiscounts(Day, Order);
         this.#REAL_COST = Order.getTotalPrice() - this.#TOTAL_DISCOUNT;
     }
 
-    countWeekEndDiscount(MENU, WEEKEND) {
+    calculateDiscounts(Day, Order) {
+        if (Order.getTotalPrice() >= constantForDiscount.EVENT_LIMIT) {
+            this.#LIST_STRING += this.calculateChristmasDiscount(Day.getDay());
+            this.#LIST_STRING += this.calculateWeekendDiscount(Order.getMenu(), Day.getWeekend());
+            this.#LIST_STRING += this.calculateSpecialDiscount(Day.getIsStar());
+            this.#LIST_STRING += this.calculateGiftEvent(Order.getTotalPrice());
+            this.#TOTAL_BENEFIT += this.calculateTotalBenefit();
+        } else {
+            this.#LIST_STRING = constantForDiscount.NOTHING;
+        }
+    }
+
+    calculateWeekendDiscount(MENU, WEEKEND) {
         if (WEEKEND) {
             const DISCOUNT = this.weekendDiscount(MENU, constantForDiscount.MAIN);
-            if (DISCOUNT > 0) return `주말 할인: -${DISCOUNT.toLocaleString('en-US', {style: 'decimal'})}원\n`
+            if (DISCOUNT > 0) return `주말 할인: -${this.formatDiscount(DISCOUNT)}원\n`
             return "";
         }
         const DISCOUNT = this.weekendDiscount(MENU, constantForDiscount.DESSERT);
-        if (DISCOUNT > 0) return `평일 할인: -${DISCOUNT.toLocaleString('en-US', {style: 'decimal'})}원\n`
+        if (DISCOUNT > 0) return `평일 할인: -${this.formatDiscount(DISCOUNT)}원\n`
         return "";
     }
 
@@ -45,42 +49,43 @@ class Discount {
         return discount;
     }
 
-    ChristmasDiscount(Day) {
+    calculateChristmasDiscount(Day) {
         if (Day <= constantForDiscount.CHRISTMAS) {
             const DAY_DISCOUNT = ((Day - 1) * 100) + 1000;
             this.#TOTAL_DISCOUNT += DAY_DISCOUNT;
-            return `크리스마스 디데이 할인: -${DAY_DISCOUNT.toLocaleString('en-US', {style: 'decimal'})}원\n`;
+            return `크리스마스 디데이 할인: -${this.formatDiscount(DAY_DISCOUNT)}원\n`;
         }
         return "";
     }
 
-    specialDiscount(isStar) {
+    calculateSpecialDiscount(isStar) {
         if (isStar) {
             this.#TOTAL_DISCOUNT += constantForDiscount.SPECIAL_DISCOUNT;
-            return `특별 할인: -${constantForDiscount.SPECIAL_DISCOUNT.toLocaleString('en-US', {style: 'decimal'})}원\n`;
+            return `특별 할인: -${this.formatDiscount(constantForDiscount.SPECIAL_DISCOUNT)}원\n`;
         }
+        return "";
     }
 
-    giftEvent(total) {
+    calculateGiftEvent(total) {
         if (total > 120000) {
             this.#GIFT = true;
-            return `증정 이벤트: -${Menu.find(({name}) => name === "샴페인").price.toLocaleString('en-US', {style: 'decimal'})}원\n`;
+            return `증정 이벤트: -${this.formatDiscount(Menu.find(({name}) => name === constantForDiscount.GIFT).price)}원\n`;
         }
         return "";
     }
 
     calculateTotalBenefit() {
         if (this.#GIFT) {
-            return Menu.find(({name}) => name === "샴페인").price + this.#TOTAL_DISCOUNT;
+            return Menu.find(({name}) => name === constantForDiscount.GIFT).price + this.#TOTAL_DISCOUNT;
         }
         return this.#TOTAL_DISCOUNT;
     }
     getTotalBenefit() {
-        return `-${(this.#TOTAL_BENEFIT).toLocaleString('en-US', {style: 'decimal'})}원`;
+        return `-${this.formatDiscount(this.#TOTAL_BENEFIT)}원`;
     }
 
     getRealCost() {
-        return `${this.#REAL_COST.toLocaleString('en-US', {style: 'decimal'})}원`;
+        return `${this.formatDiscount(this.#REAL_COST)}원`;
     }
 
     getBadge() {
@@ -97,6 +102,10 @@ class Discount {
 
     getList() {
         return this.#LIST_STRING;
+    }
+
+    formatDiscount(value) {
+        return value.toLocaleString('en-US', { style: 'decimal' });
     }
 }
 
