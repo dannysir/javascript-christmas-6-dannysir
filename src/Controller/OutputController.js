@@ -4,11 +4,11 @@ import Discount from "../Model/Discount.js";
 const OutputController = (Day, Order) => {
     OutputView.printFisrtOut(Day.getDay());
     OutputView.printMenu(Order.getMyOrder());
-    OutputView.printTotalCost(Order.calculateTotalPrice(Order.getMenu()).toLocaleString('en-US', { style: 'decimal'}));
+    OutputView.printTotalCost(Order.getTotalPrice().toLocaleString('en-US', { style: 'decimal'}));
 
     const DISCOUNT = new Discount(Day, Order);
     OutputView.printGift(DISCOUNT.getGiftList());
-    OutputView.printList(DISCOUNT.getList());
+    OutputView.printList(DISCOUNT.getDiscountList());
     OutputView.printTotalDiscount(DISCOUNT.getTotalBenefit());
     OutputView.printRealCost(DISCOUNT.getRealCost());
     OutputView.printBadge(DISCOUNT.getBadge());
