@@ -10,7 +10,7 @@ describe("Discount Model 테스트", () => {
         const ReserveDay = new Date(DAY);
         const MyOrder = new Order(MENU);
         const MyDiscount = new Discount(ReserveDay, MyOrder)
-        expect(MyDiscount.getList()).toContain(ANSWER);
+        expect(MyDiscount.getDiscountList()).toContain(ANSWER);
     });
 
     test("크리스마스 디데이 할인 출력", () => {
@@ -20,7 +20,7 @@ describe("Discount Model 테스트", () => {
         const ReserveDay = new Date(DAY);
         const MyOrder = new Order(MENU);
         const MyDiscount = new Discount(ReserveDay, MyOrder)
-        expect(MyDiscount.getList()).toContain(ANSWER);
+        expect(MyDiscount.getDiscountList()).toContain(ANSWER);
     });
 
     test("특별 할인 출력", () => {
@@ -30,7 +30,7 @@ describe("Discount Model 테스트", () => {
         const ReserveDay = new Date(DAY);
         const MyOrder = new Order(MENU);
         const MyDiscount = new Discount(ReserveDay, MyOrder)
-        expect(MyDiscount.getList()).toContain(ANSWER);
+        expect(MyDiscount.getDiscountList()).toContain(ANSWER);
     });
 
     test("증정 이벤트 출력", () => {
@@ -40,7 +40,7 @@ describe("Discount Model 테스트", () => {
         const ReserveDay = new Date(DAY);
         const MyOrder = new Order(MENU);
         const MyDiscount = new Discount(ReserveDay, MyOrder)
-        expect(MyDiscount.getList()).toContain(ANSWER);
+        expect(MyDiscount.getDiscountList()).toContain(ANSWER);
     });
 
     test("총 혜택 금액 출력", () => {
