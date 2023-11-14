@@ -5,7 +5,6 @@ import constantsForDiscount from "../Constants/ConstantsForDiscount.js";
 class Discount {
     #TOTAL_BENEFIT = 0;
     #REAL_COST;
-
     #DISCOUNT;
     constructor(Day, Order) {
         this.#DISCOUNT = [0, 0, 0, 0, 0];
